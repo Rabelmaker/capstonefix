@@ -1,5 +1,6 @@
 package com.akbar.capstone2
 
+import ResultScreen
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -81,7 +83,7 @@ fun CapstoneApp(
             startDestination = if (showSplashScreen.value) {
                 Screen.Splash.route
             } else {
-                Screen.Login.route
+                Screen.Home.route
             },
             modifier = Modifier.padding(paddingValues)
         ) {
@@ -103,16 +105,11 @@ fun CapstoneApp(
 
                 )
             }
-            composable(Screen.Cart.route) {
-                CartScreen(
-                    navigateBack = { navController.navigateUp() },
-                    onOrderButtonClicked = { message ->
-                        shareOrder(context, message)
-                    }
-                )
-            }
             composable(Screen.Recommend.route) {
-                ReccomendScreen()
+                ReccomendScreen(
+                    navController = NavController(context),
+                    onClick = { navController.navigate("result") }
+                )
             }
             composable(Screen.Splash.route) {
                 SplashScreen()
@@ -125,6 +122,9 @@ fun CapstoneApp(
 
             composable(Screen.PestAnalysis.route) {
                 PestAnalysisScreen()
+            }
+            composable(Screen.Result.route) {
+                ResultScreen()
             }
             composable(Screen.Profile.route) {
                 ProfileScreen(

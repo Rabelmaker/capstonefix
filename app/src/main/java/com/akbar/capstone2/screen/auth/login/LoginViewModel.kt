@@ -22,7 +22,11 @@ suspend fun loginUser(
             PreferenceHelper.setStatusLogin(context, true)
 
             showMessage(context,"Login successful")
-            navController.navigate("home")
+            navController.navigate("home") {
+                popUpTo("login") {
+                    inclusive = true
+                }
+            }
         } else {
             showMessage(context,"Login failed 1: ${response.msg}")
         }

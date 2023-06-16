@@ -22,3 +22,21 @@ class ApiHelper {
         }
     }
 }
+
+class ApiHelper2 {
+    companion object{
+        fun getApiService(): ApiService {
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://predictmodel-4e4dg4jsyq-uc.a.run.app")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+            return retrofit.create(ApiService::class.java)
+        }
+    }
+}
